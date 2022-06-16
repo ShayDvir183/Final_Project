@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install-globals": "npm install nodemon -g tsc -g",
+    "build-watch": "npx tsc --watch",
+    "start-dev": "nodemon ./dist/index.js",
+    "start": "concurrently -k -p \"[{name}]\" -n \"TS-Compile-Api,Api\" -c \"blue,red\"  \"npm run build-watch\" \"npm run start-dev\"",
+    "test": "mocha ./test/ --recursive --exit"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "concurrently": "^7.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "joi": "^17.6.0"
+  }
+}
