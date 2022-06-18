@@ -1,0 +1,10 @@
+.route {
+    padding: 10px;
+    background-color: blueviolet;
+}
+
+.route>a {
+    color: black;
+    font-weight: bold;
+
+}

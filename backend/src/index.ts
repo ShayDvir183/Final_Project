@@ -5,6 +5,7 @@ import cors from "cors"
 import bodyParser from "body-parser";
 import { initDB } from './db';
 import loginRouter from "./login"
+import verifyToken from './login/helpers/token';
 
 initDB()
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(bodyParser.json())
 
 app.use("/auth", loginRouter)
+app.use(verifyToken)
 
 
 app.get("/healthcheck", async (req, res) => {
