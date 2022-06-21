@@ -1,5 +1,5 @@
 import { store } from "..";
-import { getTokenLS, setTokenLS } from "../ls";
+import { getTokenLS, setTokenLS, setRoleLS } from "../ls";
 import { setUser } from "../reducers/authReducer";
 import { login } from "../services/loginService";
 
@@ -18,7 +18,7 @@ export async function loginAction(user: IUserLogin): Promise<any> {
     try {
         const loginRes = await login(user)
         setTokenLS(loginRes.token)
-        return { message: "Login Success", }
+        setRoleLS(loginRes.role)
     } catch (error) {
 
     } finally {

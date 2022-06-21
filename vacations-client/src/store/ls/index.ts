@@ -11,3 +11,7 @@ export function clearTokenLS(token: string) {
 export function getTokenLS() {
     return localStorage.getItem("token")
 }
+export function setRoleLS(role: string) {
+    if (!role) return;
+    localStorage.setItem("role", role)
+}

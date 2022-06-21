@@ -22,35 +22,29 @@ import MyModal from '../../ui-components/modal';
 const theme = createTheme();
 
 export default function LoginPage() {
-    const initialState: IUserLogin = { user_name: "", password: "" };
-    const [user, setUser] = useState(initialState);
-    const [isOpen, setIsOpen] = useState(false);
+    const [user_name, setUser_Name] = useState("");
+    const [password, setPassword] = useState("");
+    const [user, setUser] = useState({ user_name: user_name, password: password });
     let navigate = useNavigate();
-
+    
     useEffect(() => {
         const isTokenExists = getTokenLS();
         if (isTokenExists) {
-            setIsOpen(true);
-            setTimeout(() => { navigate("/") }, 5000);
+            navigate("/");
         }
-        if (!user.password || !user.user_name) return
-        async function loginHandler() {
-            const result = await loginAction(user);
-            if (result) {
-                return navigate("/");
-            }
-        }
+    }, [])
+    useEffect(() => {
+        if (!user.user_name || !user.password) return
+        loginAction(user)
+        setTimeout(() => { navigate("/") }, 5000);
 
-        loginHandler()
     }, [user])
+    function loginHandler() {
+        setUser({ user_name: user_name, password: password });
+    }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const dUser = { user_name: data.get("username")?.toString(), password: data.get("password")?.toString() };
-        if (!dUser.user_name || !dUser.password) return alert("Please fill all the fields");
-        setUser(dUser);
-    };
+
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -70,8 +64,10 @@ export default function LoginPage() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" noValidate sx={{ mt: 1 }}>
                         <TextField
+                            onChange={(e) => setUser_Name(e.target.value)}
+
                             margin="normal"
                             required
                             fullWidth
@@ -82,6 +78,7 @@ export default function LoginPage() {
                             autoFocus
                         />
                         <TextField
+                            onChange={(e) => setPassword(e.target.value)}
                             margin="normal"
                             required
                             fullWidth
@@ -92,7 +89,8 @@ export default function LoginPage() {
                             autoComplete="current-password"
                         />
                         <Button
-                            type="submit"
+                            onClick={loginHandler}
+                            type="button"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
@@ -109,7 +107,6 @@ export default function LoginPage() {
                     </Box>
                 </Box>
             </Container>
-            <MyModal isOpen={isOpen} />
         </ThemeProvider>
 
     );

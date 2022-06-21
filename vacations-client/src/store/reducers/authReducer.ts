@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface AuthState {
     token: string | null;
+    isModalOpen: boolean;
 }
 
 const initialState: AuthState = {
     token: null,
+    isModalOpen: false,
 };
 
 export const authSlice = createSlice({
@@ -14,8 +16,13 @@ export const authSlice = createSlice({
         setUser: (state: AuthState, action: PayloadAction<string>) => {
             state.token = action.payload;
         },
+        setIsModalOpen: (state: AuthState, action: PayloadAction<boolean>) => {
+            console.log("setIsModalOpen", action.payload);
+            state.isModalOpen = action.payload;
+        }
+        ,
     },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, setIsModalOpen } = authSlice.actions;
 export default authSlice.reducer;

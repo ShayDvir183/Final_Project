@@ -4,6 +4,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setIsModalOpen } from '../../store/reducers/authReducer';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -16,33 +18,28 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
-export default function MyModal(props: { isOpen: boolean }) {
-    let { isOpen } = props;
-    const [open, setOpen] = React.useState(false);
-    const navigate = useNavigate();
-    console.log(isOpen);
+export default function MyModal() {
+    const isModalOpen = useAppSelector((state) => state.auth.isModalOpen);
+    const dispatch = useAppDispatch();
     const handleClose = () => {
-        setOpen(false)
-        return navigate("/");
+        dispatch(setIsModalOpen(false));
     }
     useEffect(() => {
-        setOpen(isOpen);
-        console.log(open);
 
-    }, [isOpen])
+    }, [isModalOpen])
+
 
     return (
         <div>
             <Modal
-                open={open}
+                open={!!isModalOpen}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        You Already Signed In ! We Send You Back To HomePage
+                        You are not logged in,Your being redirected to login page
                     </Typography>
                     <Button onClick={handleClose}>Close</Button>
                 </Box>

@@ -22,5 +22,5 @@ export interface IUserLogin {
 export async function createUser(user: IUserFullData) {
     const query: string = getCreateUserQuery()
     const result = await getConnection().execute(query, [user.first_name, user.last_name, user.email, user.user_name, user.password])
-    return result;
+    return result.insertId;
 }

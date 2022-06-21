@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 import LoginPage from './components/pages/login';
 import RegisterPage from './components/pages/register';
+import Vacations from './components/pages/vacations';
+import MyModal from './components/ui-components/modal';
 interface IRoute {
   path: string;
   element: any;
@@ -27,6 +29,11 @@ const routes: Array<IRoute> = [
     path: "/register",
     element: <RegisterPage />,
     linkText: "Register",
+    invisible: false,
+  }, {
+    path: "/vacations",
+    element: <Vacations />,
+    linkText: "Vacations",
     invisible: false,
   },
 ]
@@ -48,7 +55,10 @@ function App() {
           <Route path={route.path} element={route.element} />
         ))}
       </Routes>
+      <MyModal  />
+
     </BrowserRouter>
+
   );
 }
 
