@@ -17,29 +17,29 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-};
+}
 export default function MyModal() {
-    const isModalOpen = useAppSelector((state) => state.auth.isModalOpen);
+    const { isOpen, message } = useAppSelector((state) => state.auth.modalSetUp);
     const dispatch = useAppDispatch();
     const handleClose = () => {
-        dispatch(setIsModalOpen(false));
+        dispatch(setIsModalOpen({ isOpen: false }));
     }
     useEffect(() => {
 
-    }, [isModalOpen])
+    }, [isOpen])
 
 
     return (
         <div>
             <Modal
-                open={!!isModalOpen}
+                open={!!isOpen}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        You are not logged in,Your being redirected to login page
+                        {message}
                     </Typography>
                     <Button onClick={handleClose}>Close</Button>
                 </Box>

@@ -1,6 +1,6 @@
 import { store } from "..";
-import { getTokenLS, setTokenLS, setRoleLS } from "../ls";
-import { setUser } from "../reducers/authReducer";
+import { getTokenLS, setTokenLS, setRoleLS, clearToken_RoleLS } from "../ls";
+import { logOut, setUser } from "../reducers/authReducer";
 import { login } from "../services/loginService";
 
 
@@ -17,6 +17,7 @@ export async function loginAction(user: IUserLogin): Promise<any> {
     }
     try {
         const loginRes = await login(user)
+        store.dispatch(setUser(loginRes.token));
         setTokenLS(loginRes.token)
         setRoleLS(loginRes.role)
     } catch (error) {
@@ -24,3 +25,18 @@ export async function loginAction(user: IUserLogin): Promise<any> {
     } finally {
     }
 }
+
+export async function logOutAction(token: string | null): Promise<any> {
+    try {
+        clearToken_RoleLS(token)
+
+        store.dispatch(logOut());
+
+    } catch (error) {
+
+    } finally {
+    }
+}
+
+
+

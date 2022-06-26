@@ -70,12 +70,19 @@ export default function VacationCard(props: { vacation: IVacation }) {
         setExpanded(!expanded);
     };
     const favoriteHandler = () => {
+        // TODO update ajax request amount of followers
         isFollowed ? dispatch(unfollowVacation(vacation)) : dispatch(followVacation(vacation))
         setIsFollowed(!isFollowed)
     }
 
     return (
-        <Card sx={{ maxWidth: 345, bgcolor: blue["100"] }}>
+        <Card sx={{
+            boxShadow: 1,
+            borderRadius: 2,
+            p: 2,
+            width: 300,
+            bgcolor: blue["100"]
+        }}>
             <CardHeader
                 avatar={
                     <Avatar
@@ -88,14 +95,14 @@ export default function VacationCard(props: { vacation: IVacation }) {
                     </Avatar>
                 }
                 action={
-                    role === "admin" ? <Box>
+                    role === "admin" && <Box>
                         <IconButton aria-label="settings">
                             <DeleteForeverOutlinedIcon />
                         </IconButton>
                         <IconButton aria-label="settings">
                             <DeleteForeverOutlinedIcon />
                         </IconButton>
-                    </Box> : null
+                    </Box>
                 }
                 title={vacation.destination}
             />

@@ -2,21 +2,24 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface VacationsState {
     vacations: Array<IVacation>;
     followedVacations: Array<IVacation>;
+    adminDialogOpen: boolean;
 }
 export interface IVacation {
-    id: number;
+    id?: number;
     description: string;
     destination: string;
     from_date: Date;
     to_date: Date;
     price: number;
     image: string;
-    ammount_of_followers: number;
+    ammount_of_followers?: number;
 }
 
 const initialState: VacationsState = {
     vacations: [],
     followedVacations: [],
+    adminDialogOpen: false,
+
 };
 
 export const vacationsSlice = createSlice({
@@ -30,7 +33,10 @@ export const vacationsSlice = createSlice({
         }, unfollowVacation: (state: VacationsState, action: PayloadAction<IVacation>) => {
             state.followedVacations = state.followedVacations.filter(vacation => vacation.id !== action.payload.id);
         },
+        setAdminDialogOpen: (state: VacationsState, action: PayloadAction<boolean>) => {
+            state.adminDialogOpen = action.payload;
+        },
     },
 });
-export const { setVacations, followVacation, unfollowVacation } = vacationsSlice.actions;
+export const { setVacations, followVacation, unfollowVacation, setAdminDialogOpen } = vacationsSlice.actions;
 export default vacationsSlice.reducer;

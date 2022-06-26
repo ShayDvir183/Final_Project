@@ -26,7 +26,6 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [user, setUser] = useState({ user_name: user_name, password: password });
     let navigate = useNavigate();
-    
     useEffect(() => {
         const isTokenExists = getTokenLS();
         if (isTokenExists) {
@@ -36,7 +35,7 @@ export default function LoginPage() {
     useEffect(() => {
         if (!user.user_name || !user.password) return
         loginAction(user)
-        setTimeout(() => { navigate("/") }, 5000);
+        setTimeout(() => { navigate("/") }, 2000);
 
     }, [user])
     function loginHandler() {
