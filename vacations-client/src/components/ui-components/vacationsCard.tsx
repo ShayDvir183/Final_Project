@@ -18,7 +18,8 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import { followVacation, IVacation, unfollowVacation } from '../../store/reducers/vacationsReducer';
 import moment from 'moment';
 import { Box, Popover } from '@mui/material';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { deleteVacationAction, followVacationAction, getVacationsAction } from '../../store/asyncFunction/vacations';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -46,7 +47,7 @@ export default function VacationCard(props: { vacation: IVacation }) {
     const [anchorEl1, setAnchorEl1] = React.useState<HTMLElement | null>(null);
     const dispatch = useAppDispatch()
     const role = localStorage.getItem("role")
-
+    const followedVacations = useAppSelector((state: any) => state.vacations.followedVacations)
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl1(event.currentTarget);
     };
@@ -68,11 +69,17 @@ export default function VacationCard(props: { vacation: IVacation }) {
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
+
     };
     const favoriteHandler = () => {
         // TODO update ajax request amount of followers
-        isFollowed ? dispatch(unfollowVacation(vacation)) : dispatch(followVacation(vacation))
         setIsFollowed(!isFollowed)
+        !isFollowed ? dispatch(unfollowVacation(vacation)) : dispatch(followVacation(vacation))
+        followVacationAction(vacation, !isFollowed)
+    }
+    function deleteHandler() {
+        deleteVacationAction(vacation.id)
+        getVacationsAction()
     }
 
     return (
@@ -96,7 +103,7 @@ export default function VacationCard(props: { vacation: IVacation }) {
                 }
                 action={
                     role === "admin" && <Box>
-                        <IconButton aria-label="settings">
+                        <IconButton style={{ "color": "red" }} onClick={deleteHandler} aria-label="settings">
                             <DeleteForeverOutlinedIcon />
                         </IconButton>
                         <IconButton aria-label="settings">

@@ -10,12 +10,20 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setAdminDialogOpen } from '../../store/reducers/vacationsReducer';
 import { createVacationAction, getVacationsAction } from '../../store/asyncFunction/vacations';
 import { Box } from '@mui/system';
+export interface IVacationAdd {
+    description: string,
+    destination: string,
+    image: string,
+    from_date: Date,
+    to_date: Date,
+    price: number,
+}
 
 export default function FormDialog() {
     const dispatch = useAppDispatch();
     const [description, setDescription] = React.useState('');
     const [price, setPrice] = React.useState(0);
-    const [image, setImage] = React.useState('');
+    const [imageQuery, setImageQuery] = React.useState('');
     const [destination, setDestination] = React.useState('');
     const [from_date, setFromDate] = React.useState(new Date());
     const [to_date, setToDate] = React.useState(new Date());
@@ -27,12 +35,13 @@ export default function FormDialog() {
 
     };
     async function addVacation() {
-        if (!description || !price || !image || !destination || !from_date || !to_date) {
+        if (!description || !price || !imageQuery || !destination || !from_date || !to_date) {
             return alert("Please fill all fields")
         }
-        const vacation = { description: description, price: price, image: image, destination: destination, from_date: from_date, to_date: to_date, ammount_of_followers: 0 }
+        const vacation = { description: description, price: price, image: imageQuery, destination: destination, from_date: from_date, to_date: to_date }
         createVacationAction(vacation)
         getVacationsAction()
+        handleClose()
     }
 
     return (
@@ -73,7 +82,7 @@ export default function FormDialog() {
                             type="text"
                             fullWidth
                             variant="standard"
-                            onChange={(e: any) => { setImage(e.target.value) }}
+                            onChange={(e: any) => { setImageQuery(e.target.value) }}
 
                         />
                         <TextField

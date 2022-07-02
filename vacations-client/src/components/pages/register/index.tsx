@@ -40,6 +40,9 @@ export default function SignUp() {
         if (!user_name || !password || !email || !first_name || !last_name) return
 
         registerAction(user)
+        setTimeout(() => {
+            navigate("/")
+        }, 1000);
     }, [user])
 
     useEffect(() => {

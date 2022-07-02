@@ -5,7 +5,7 @@ interface VacationsState {
     adminDialogOpen: boolean;
 }
 export interface IVacation {
-    id?: number;
+    id: number;
     description: string;
     destination: string;
     from_date: Date;
