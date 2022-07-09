@@ -44,7 +44,7 @@ export async function followVacation(vacation: IVacation, isFollowed: boolean) {
 }
 export async function editVacation(vacation: IVacation) {
     try {
-        const result = await axiosInstance.post("")
+        const result = await axiosInstance.post(`${vacationsUrl}/edit`, { vacation })
         return result
     } catch (error: any) {
         return error

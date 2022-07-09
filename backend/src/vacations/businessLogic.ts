@@ -1,5 +1,5 @@
 import { getConnection } from "../db";
-import { getAllVacationsQuery, getAmountOfFollowersQuery, getAmountOfFollowersQueryFollowedVacations, getCheckFollowQuery, getCreateVacationQuery, getFollowVacationQuery, getUpdateFollowQuery, getUpdateFollowersAmountQuery, getDeleteVacationQuery } from "./query";
+import { getAllVacationsQuery, getAmountOfFollowersQuery, getAmountOfFollowersQueryFollowedVacations, getCheckFollowQuery, getCreateVacationQuery, getFollowVacationQuery, getUpdateFollowQuery, getUpdateFollowersAmountQuery, getDeleteVacationQuery, getUpdateVacationQuery } from "./query";
 import axios from "axios";
 const { access_key } = process.env
 
@@ -25,11 +25,24 @@ export async function getAllVacations() {
 
 export async function createVacation(vacation: IVacation) {
     const { description, destination, image, from_date, to_date, price } = vacation;
-
+    console.log(from_date)
     const res = await getVacImageAddress(image)
 
     const query: string = getCreateVacationQuery()
     const result = await getConnection().execute(query, [description, destination, res, from_date, to_date, price])
+
+    return result[0];
+
+}
+export async function editVacation(vacation: IVacation) {
+    let { description, destination, image, from_date, to_date, price,id,ammount_of_followers } = vacation;
+    if(!image.includes("https://images.unsplash.com/")){
+    image = await getVacImageAddress(image)
+    }
+    const query: string = getUpdateVacationQuery()
+    console.log({ description, destination, image, from_date, to_date, price,id })
+    const result = await getConnection().execute(query, [description, destination, image, from_date, to_date, price,id])
+
     return result[0];
 
 }
@@ -38,23 +51,18 @@ export async function followVacation(vacationId: number, userId: number, isFollo
     const followersAmount = getAmountOfFollowersQuery()
     const followersAmountRes = await getConnection().query(followersAmount)
     const amount = followersAmountRes[0]
-    console.log(amount, "amount")
-
     if (isFollowed) {
         const query = getUpdateFollowersAmountQuery()
         const selectedVacation = amount.find((vac: any) => {
             return vac.id === vacationId
         })
-        console.log(selectedVacation, "selectedVacatio")
         const newAmount = selectedVacation.ammount_of_followers + 1
         const result = await getConnection().execute(query, [newAmount, vacationId])
-        console.log(result)
     } else {
         const query = getUpdateFollowersAmountQuery()
         const selectedVacation = amount.find((vac: any) => {
             return vac.id === vacationId
         })
-        console.log(selectedVacation, "selectedVacatio")
         const newAmount = selectedVacation.ammount_of_followers - 1
         const result = await getConnection().execute(query, [newAmount, vacationId])
         console.log(result)
@@ -76,14 +84,17 @@ export async function getVacImageAddress(query: string) {
     if (!query) return null
     try {
         const result = await axios.get(`https://api.unsplash.com/search/photos?query=${query}&client_id=${access_key}`)
+        if (result.data.total === 0) {
+            return "https://www.researchgate.net/profile/Ahmed-Mohmed-2/post/Why_do_we_need_a_vacation_How_often_do_you_need_a_vacationWhat_are_the_benefits_of_vacationsDo_vacations_make_you_happier/attachment/5e079b76cfe4a777d4fedc26/AS%3A841148566339584%401577556854285/image/vacation-final.jpg"
+        }
         return result.data.results[0].urls.small
     } catch (error: any) {
-        console.log(error)
 
     }
 
 
 }
+
 async function checkIfFollowedAlready(userId: number, vacationId: number) {
     const query: string = getCheckFollowQuery()
     const result = await getConnection().execute(query, [userId, vacationId])

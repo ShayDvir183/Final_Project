@@ -6,7 +6,10 @@ const getAllVacationsQuery = () => {
     return 'SELECT * FROM vacations_app.vacations order by from_date '
 }
 const getCreateVacationQuery = () => {
-    return 'INSERT INTO vacations_app.vacations (description, destination, image, from_date, to_date, price, ammount_of_followers) VALUES (?, ?, ?, ?, ?, ?, ?);'
+    return 'INSERT INTO vacations_app.vacations (description, destination, image, from_date, to_date, price) VALUES (?, ?, ?, ?, ?, ?);'
+}
+const getUpdateVacationQuery = () => {
+    return 'UPDATE `vacations_app`.`vacations` SET `description` = ?, `destination` = ?, `image` = ?, `from_date` = ?, `to_date` = ?, `price` = ? WHERE (`id` = ?);'
 }
 const getFollowVacationQuery = () => {
     return 'INSERT INTO vacations_app.followed_vacations (vac_id, user_id, follow_status) VALUES (?, ?, ?);'
@@ -42,4 +45,4 @@ const getDeleteVacationQuery = () => {
 }
 
 
-export { getAllVacationsQuery, getAmountOfFollowersQuery, getCreateVacationQuery, getFollowVacationQuery, getUpdateAmountOfFollowersQuery, getAmountOfFollowersQueryFollowedVacations, getIsFollowingQuery, getCheckFollowQuery, getUpdateFollowersAmountQuery, getUpdateFollowQuery, getDeleteVacationQuery }
+export { getAllVacationsQuery, getUpdateVacationQuery, getAmountOfFollowersQuery, getCreateVacationQuery, getFollowVacationQuery, getUpdateAmountOfFollowersQuery, getAmountOfFollowersQueryFollowedVacations, getIsFollowingQuery, getCheckFollowQuery, getUpdateFollowersAmountQuery, getUpdateFollowQuery, getDeleteVacationQuery }

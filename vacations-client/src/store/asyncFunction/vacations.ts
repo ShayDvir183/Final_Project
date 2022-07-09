@@ -1,14 +1,13 @@
 import { store } from "..";
-import { IVacationAdd } from "../../components/ui-components/dialog";
-import { IVacation, setVacations } from "../reducers/vacationsReducer";
-import { createVacation, deleteVacation, followVacation, getVacations } from "../services/vacationsService";
+import {  IVacation, setAdminDialogOpen, setVacations } from "../reducers/vacationsReducer";
+import { createVacation, deleteVacation, editVacation, followVacation, getVacations } from "../services/vacationsService";
 
 
 
-export async function deleteVacationAction(id:number){
-    try{
+export async function deleteVacationAction(id: number) {
+    try {
         const result = await deleteVacation(id);
-    }catch(ex){
+    } catch (ex) {
 
     }
 }
@@ -21,13 +20,27 @@ export async function getVacationsAction(): Promise<any> {
     } finally {
     }
 }
-export async function createVacationAction(vacation: IVacationAdd): Promise<any> {
+export async function createVacationAction(vacation: IVacation): Promise<any> {
     try {
         const result = await createVacation(vacation)
+
     } catch (error) {
     } finally {
+        getVacationsAction()
     }
 }
+export async function editVacationAction(vacation: IVacation): Promise<any> {
+    try {
+        const result = await editVacation(vacation)
+        store.dispatch(setAdminDialogOpen({ isOpen: false, edit: false }))
+
+    } catch (error) {
+    } finally {
+        getVacationsAction()
+    }
+}
+
+
 export async function followVacationAction(vacation: IVacation, isFollowed: boolean): Promise<any> {
     try {
         const result = await followVacation(vacation, isFollowed)

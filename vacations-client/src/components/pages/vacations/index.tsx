@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { FormControlLabel, Grid, IconButton, Pagination, Switch } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { store } from '../../../store';
@@ -9,46 +9,49 @@ import { setIsModalOpen } from '../../../store/reducers/authReducer';
 import { setAdminDialogOpen } from '../../../store/reducers/vacationsReducer';
 import FormDialog from '../../ui-components/dialog';
 import VacationCard from '../../ui-components/vacationsCard';
-
+import AddIcon from '@mui/icons-material/Add';
+import { Box } from '@mui/system';
 
 
 export default function Vacations() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch();
+    const [vacationsDisplay, setVacationsDisplay] = useState(false)
     // const isOpen = useAppSelector((state: any) => state.vacations.adminDialogOpen);
     let tokenLS = getTokenLS()
     const isAdmin = localStorage.getItem("role")
     const { vacations } = useAppSelector((state: any) => state.vacations);
-    const token = useAppSelector((state: any) => state.auth.token);
-    const { followedVacations } = useAppSelector((state: any) => state.vacations);
 
-
+    console.log(vacations)
     useEffect(() => {
         if (!tokenLS) {
             navigate("/login");
         }
-    }, [token, tokenLS])
-
+    }, [tokenLS])
+    
     useEffect(() => {
-        if (!tokenLS) {
-            navigate("/login");
-        }
-
-        async function vacations() {
-            const res = await getVacationsAction();
-        }
-        vacations()
+        getVacationsAction();
     }, [])
     function addVacationHandler() {
-        dispatch(setAdminDialogOpen(true))
+        dispatch(setAdminDialogOpen( { isOpen: true,edit:false } ))
 
     }
     return (
-        <div>
-            {isAdmin === "admin" && <div style={{ margin: "30px 0", textAlign: "center", backgroundColor: "yellow" }} >
-                <button style={{ margin: "auto auto" }} onClick={addVacationHandler}>Add Vacation</button>    </div>
+        <Box p={1}>
 
+            {isAdmin === "admin" && <div style={{ margin: "30px 0", textAlign: "center" }} >
+                <label >Add-Vacation</label><br />
+                <IconButton size='large' onClick={addVacationHandler}><AddIcon /></IconButton>    </div>
             }
+            {isAdmin !== "admin" && <FormControlLabel
+                control={
+                    <Switch color="secondary" onClick={(e: any) => {
+                        console.log(e.target.value)
+                        setVacationsDisplay(!e.target.value)
+                    }} name="gilad" />
+                }
+                label={`Followed vacations`}
+            />}
             < Grid container spacing={8} sx={{ margin: "30px 0", width: "auto" }
             } >
                 {vacations?.vacations?.map((v: any, index: number) => (
@@ -58,7 +61,8 @@ export default function Vacations() {
                 ))}
             </Grid >
             <FormDialog />
-        </div >
+
+        </Box>
     )
 }
 

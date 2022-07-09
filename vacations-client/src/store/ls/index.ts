@@ -3,8 +3,7 @@ export function setTokenLS(token: string) {
     localStorage.setItem("token", token)
 }
 
-export function clearToken_RoleLS(token: string | null) {
-    if (!token) return;
+export function clearToken_RoleLS() {
     localStorage.removeItem("token")
     localStorage.removeItem("role")
     return { message: `successfully logged out` }

@@ -15,12 +15,12 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import { followVacation, IVacation, unfollowVacation } from '../../store/reducers/vacationsReducer';
+import { followVacation, IVacation, setAdminDialogOpen, unfollowVacation } from '../../store/reducers/vacationsReducer';
 import moment from 'moment';
 import { Box, Popover } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { deleteVacationAction, followVacationAction, getVacationsAction } from '../../store/asyncFunction/vacations';
-
+import { deleteVacationAction, followVacationAction, getVacationsAction,editVacationAction } from '../../store/asyncFunction/vacations';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -77,11 +77,16 @@ export default function VacationCard(props: { vacation: IVacation }) {
         !isFollowed ? dispatch(unfollowVacation(vacation)) : dispatch(followVacation(vacation))
         followVacationAction(vacation, !isFollowed)
     }
+
     function deleteHandler() {
         deleteVacationAction(vacation.id)
         getVacationsAction()
     }
-
+    function editHandler() {
+        dispatch(setAdminDialogOpen({isOpen: true, edit:true,editVacation:vacation}))
+        console.log(vacation.from_date,vacation.to_date)
+        getVacationsAction()
+    }
     return (
         <Card sx={{
             boxShadow: 1,
@@ -106,8 +111,8 @@ export default function VacationCard(props: { vacation: IVacation }) {
                         <IconButton style={{ "color": "red" }} onClick={deleteHandler} aria-label="settings">
                             <DeleteForeverOutlinedIcon />
                         </IconButton>
-                        <IconButton aria-label="settings">
-                            <DeleteForeverOutlinedIcon />
+                        <IconButton color='primary' aria-label="edit" onClick={editHandler}>
+                            <EditRoundedIcon />
                         </IconButton>
                     </Box>
                 }

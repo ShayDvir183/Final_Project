@@ -28,8 +28,7 @@ export async function loginAction(user: IUserLogin): Promise<any> {
 
 export async function logOutAction(token: string | null): Promise<any> {
     try {
-        clearToken_RoleLS(token)
-
+        clearToken_RoleLS()
         store.dispatch(logOut());
 
     } catch (error) {
