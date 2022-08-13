@@ -1,49 +1,63 @@
 import { store } from "..";
-import {  IVacation, setAdminDialogOpen, setVacations } from "../reducers/vacationsReducer";
-import { createVacation, deleteVacation, editVacation, followVacation, getVacations } from "../services/vacationsService";
-
-
+import {  IVacation, setAdminDialogOpen, setChartData, setPaginationVacations, setVacations } from "../reducers/vacationsReducer";
+import { createVacation, deleteVacation, editVacation, followVacation, getChartData, getVacations } from "../services/vacationsService";
 
 export async function deleteVacationAction(id: number) {
     try {
-        const result = await deleteVacation(id);
+        await deleteVacation(id);
     } catch (ex) {
 
     }
 }
-
 export async function getVacationsAction(): Promise<any> {
     try {
         const result = await getVacations()
-        store.dispatch(setVacations(result.data))
+        store.dispatch(setVacations(result.data.vacations))
+        const p = localStorage.getItem("page")
+          if(p){
+             store.dispatch(setPaginationVacations(parseInt(p)))
+          }else{
+            store.dispatch(setPaginationVacations(1))
+          }
+    } catch (error) {
+    } finally {
+    }
+}
+export async function getChartDataAction(): Promise<any> {
+    try {
+        const result = await getChartData()
+        console.log(result)
+        store.dispatch(setChartData(result))
+        // const followedVacations = result.data.vacations.filter((vac: IVacation) => { return vac.isFollow })
+        // store.dispatch(setFollowedVacations(followedVacations))
     } catch (error) {
     } finally {
     }
 }
 export async function createVacationAction(vacation: IVacation): Promise<any> {
     try {
-        const result = await createVacation(vacation)
+        await createVacation(vacation)
+        store.dispatch(setAdminDialogOpen({ isOpen: false, edit: false,text:"" }))
 
+        getVacationsAction()
     } catch (error) {
     } finally {
-        getVacationsAction()
     }
 }
 export async function editVacationAction(vacation: IVacation): Promise<any> {
     try {
-        const result = await editVacation(vacation)
-        store.dispatch(setAdminDialogOpen({ isOpen: false, edit: false }))
+        await editVacation(vacation)
+        store.dispatch(setAdminDialogOpen({ isOpen: false, edit: false,text:"" }))
+        getVacationsAction()
 
     } catch (error) {
     } finally {
-        getVacationsAction()
     }
 }
-
-
-export async function followVacationAction(vacation: IVacation, isFollowed: boolean): Promise<any> {
+export async function followVacationAction(vacation: IVacation,isFollow:boolean): Promise<any> {
     try {
-        const result = await followVacation(vacation, isFollowed)
+       await followVacation(vacation,isFollow)
+       
     } catch (error) {
     } finally {
     }

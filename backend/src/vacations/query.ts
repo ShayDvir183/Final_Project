@@ -14,7 +14,6 @@ const getUpdateVacationQuery = () => {
 const getFollowVacationQuery = () => {
     return 'INSERT INTO vacations_app.followed_vacations (vac_id, user_id, follow_status) VALUES (?, ?, ?);'
 }
-// need to complete check which vacation the user follow
 const getIsFollowingQuery = () => {
     return 'SELECT * FROM vacations_app.followed_vacations where vac_id = ? order by created_at desc limit 1'
 }
@@ -43,6 +42,12 @@ const getAmountOfFollowersQuery = () => {
 const getDeleteVacationQuery = () => {
     return 'DELETE FROM `vacations_app`.`vacations` WHERE (`id` = ?);'
 }
+const getIdsQuery = () => {
+    return 'SELECT vac_id FROM vacations_app.followed_vacations where user_id = ? and follow_status = "follow";'
+}
+const getChartDataQuery = () => {
+    return 'SELECT destination,ammount_of_followers FROM vacations_app.vacations where ammount_of_followers != 0;'
+}
 
 
-export { getAllVacationsQuery, getUpdateVacationQuery, getAmountOfFollowersQuery, getCreateVacationQuery, getFollowVacationQuery, getUpdateAmountOfFollowersQuery, getAmountOfFollowersQueryFollowedVacations, getIsFollowingQuery, getCheckFollowQuery, getUpdateFollowersAmountQuery, getUpdateFollowQuery, getDeleteVacationQuery }
+export { getAllVacationsQuery,getIdsQuery,getChartDataQuery, getUpdateVacationQuery, getAmountOfFollowersQuery, getCreateVacationQuery, getFollowVacationQuery, getUpdateAmountOfFollowersQuery, getAmountOfFollowersQueryFollowedVacations, getIsFollowingQuery, getCheckFollowQuery, getUpdateFollowersAmountQuery, getUpdateFollowQuery, getDeleteVacationQuery }

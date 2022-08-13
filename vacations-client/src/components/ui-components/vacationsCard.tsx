@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -9,19 +9,17 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { blue, red } from '@mui/material/colors';
+import { blue } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import { followVacation, IVacation, setAdminDialogOpen, unfollowVacation } from '../../store/reducers/vacationsReducer';
+import {  IVacation, setAdminDialogOpen, setPaginationVacations } from '../../store/reducers/vacationsReducer';
 import moment from 'moment';
 import { Box, Popover } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { deleteVacationAction, followVacationAction, getVacationsAction,editVacationAction } from '../../store/asyncFunction/vacations';
+import { useAppDispatch, useAppSelector} from '../../store/hooks';
+import { deleteVacationAction, followVacationAction, getVacationsAction } from '../../store/asyncFunction/vacations';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-interface ExpandMoreProps extends IconButtonProps {
+    interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
 
@@ -41,13 +39,16 @@ export interface SimpleDialogProps {
     onClose: (value: string) => void;
 }
 export default function VacationCard(props: { vacation: IVacation }) {
-    const { vacation } = props;
-    const [isFollowed, setIsFollowed] = React.useState(false);
+    let { vacation} = props;
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
     const [anchorEl1, setAnchorEl1] = React.useState<HTMLElement | null>(null);
+    const [isFollowing, setIsFollowing] = React.useState(vacation.isFollowed);
+    const {page} = useAppSelector((state: any) => state.vacations);
+    useEffect(() => {
+        dispatch(setPaginationVacations(page))
+    }, [isFollowing])
     const dispatch = useAppDispatch()
     const role = localStorage.getItem("role")
-    const followedVacations = useAppSelector((state: any) => state.vacations.followedVacations)
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl1(event.currentTarget);
     };
@@ -58,42 +59,48 @@ export default function VacationCard(props: { vacation: IVacation }) {
     const handlePopoverOpenAvatar = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handlePopoverCloseAvatar = () => {
         setAnchorEl(null);
     };
-
     const open = Boolean(anchorEl);
     const open1 = Boolean(anchorEl1);
     const [expanded, setExpanded] = React.useState(false);
-
     const handleExpandClick = () => {
         setExpanded(!expanded);
-
     };
-    const favoriteHandler = () => {
-        // TODO update ajax request amount of followers
-        setIsFollowed(!isFollowed)
-        !isFollowed ? dispatch(unfollowVacation(vacation)) : dispatch(followVacation(vacation))
-        followVacationAction(vacation, !isFollowed)
+    const favoriteHandler = async () => {
+      setIsFollowing(!isFollowing)  
+      console.log(!isFollowing)
+      await  followVacationAction(vacation,isFollowing?false:true)
+      getVacationsAction()
     }
-
     function deleteHandler() {
         deleteVacationAction(vacation.id)
         getVacationsAction()
     }
     function editHandler() {
-        dispatch(setAdminDialogOpen({isOpen: true, edit:true,editVacation:vacation}))
-        console.log(vacation.from_date,vacation.to_date)
+        dispatch(setAdminDialogOpen({isOpen: true, edit:true,editVacation:vacation,text:`edit vacation ${vacation.destination}`}))
         getVacationsAction()
     }
     return (
         <Card sx={{
             boxShadow: 1,
             borderRadius: 2,
-            p: 2,
+            p: 1,
             width: 300,
-            bgcolor: blue["100"]
+            bgcolor: blue["100"],
+            mx: 'auto',
+            mb: 1,
+            mt: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            '&:hover': {
+                cursor: 'pointer',
+                bgcolor: blue["200"],
+            },
+
         }}>
             <CardHeader
                 avatar={
@@ -102,7 +109,7 @@ export default function VacationCard(props: { vacation: IVacation }) {
                         aria-haspopup="true"
                         onMouseEnter={handlePopoverOpenAvatar}
                         onMouseLeave={handlePopoverCloseAvatar}
-                        sx={{ bgcolor: red["A100"] }} aria-label="vacations">
+                        sx={{ bgcolor: "rgba(0,0,0,0.5)" }} aria-label="vacations">
                         {vacation.ammount_of_followers}
                     </Avatar>
                 }
@@ -122,7 +129,7 @@ export default function VacationCard(props: { vacation: IVacation }) {
                 component="img"
                 height="194"
                 image={vacation.image}
-                alt="Paella dish"
+                alt="Vacation"
             />
             <CardContent>
                 <Typography variant="subtitle1" color="text.primary">
@@ -140,14 +147,15 @@ export default function VacationCard(props: { vacation: IVacation }) {
             <CardActions disableSpacing>
                 <IconButton
                     onClick={favoriteHandler}
-                    disabled={role === "admin" ? true : false}
+                    sx={{
+                        pointerEvents: role === "admin" ?'none':`auto`,
+                    }}
+                    // disabled={role === "admin" ? true : false}
                     aria-label="add to favorites">
                     <FavoriteIcon
-                        htmlColor={isFollowed ? 'red' : "black"} />
+                        htmlColor={!isFollowing ? 'black' : "red"} />
                 </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
+               
                 <ExpandMore
                     aria-owns={open ? 'mouse-over-popover1' : undefined}
                     aria-haspopup="true"
@@ -161,9 +169,9 @@ export default function VacationCard(props: { vacation: IVacation }) {
                     <ExpandMoreIcon />
                 </ExpandMore>
             </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <Typography variant="body2" color="text.primary">
+            <Collapse  in={expanded} timeout="auto" unmountOnExit>
+                <CardContent >
+                    <Typography sx={{wordBreak:"break-word",lineHeight:1.6,fontFamily:"serif"}} variant="body1" color="gray">
                         {vacation.description}
                     </Typography>
                 </CardContent>
@@ -186,7 +194,7 @@ export default function VacationCard(props: { vacation: IVacation }) {
                 onClose={handlePopoverClose}
                 disableRestoreFocus
             >
-                <Typography sx={{ p: 1 }}>Amount Of Followers : {vacation.ammount_of_followers}</Typography>
+                <Typography sx={{ p: 1}}>Amount Of Followers : {vacation.ammount_of_followers}</Typography>
             </Popover>
             <Popover
                 id="mouse-over-popover1"

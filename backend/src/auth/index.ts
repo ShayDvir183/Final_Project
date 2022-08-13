@@ -14,12 +14,10 @@ router.post("/register", registerHandler)
 async function loginHandler(req, res) {
     const { password, user_name } = req.body
     const user = { password, user_name }
-    console.log(user)
     const userExists = await isUserExists(user)
     if (!userExists) return res.status(404).send("User not found");
     const passwordMatch = isPassMatch(user.password, userExists.password)
     if (!passwordMatch) return res.status(401).send("Unauthorized ! Please Contact Admin");
-    console.log(userExists)
     const token = signToken(userExists)
     res.json({ message: "Login Success", token, role: userExists?.role });
 }

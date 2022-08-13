@@ -11,7 +11,7 @@ import { loginAction } from "./login";
 export async function registerAction(user: any): Promise<any> {
     try {
         const result = await register(user)
-        const login = await loginAction(user)
+        return result
     } catch (error) {
 
     } finally {

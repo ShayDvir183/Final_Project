@@ -1,12 +1,12 @@
 import { getConnection } from "../db";
-import { getAllVacationsQuery, getAmountOfFollowersQuery, getAmountOfFollowersQueryFollowedVacations, getCheckFollowQuery, getCreateVacationQuery, getFollowVacationQuery, getUpdateFollowQuery, getUpdateFollowersAmountQuery, getDeleteVacationQuery, getUpdateVacationQuery } from "./query";
+import { getAllVacationsQuery,getIdsQuery, getAmountOfFollowersQuery, getAmountOfFollowersQueryFollowedVacations, getCheckFollowQuery, getCreateVacationQuery, getFollowVacationQuery, getUpdateFollowQuery, getUpdateFollowersAmountQuery, getDeleteVacationQuery, getUpdateVacationQuery } from "./query";
 import axios from "axios";
 const { access_key } = process.env
 
 
 
 export interface IVacation {
-    id: number,
+    id: string,
     description: string,
     destination: string,
     image: string,
@@ -14,13 +14,24 @@ export interface IVacation {
     to_date: Date,
     price: number,
     ammount_of_followers: number,
+    isFollowed?: boolean
 }
 
 
-export async function getAllVacations() {
+export async function getAllVacations(userId:number) {
     const query: string = getAllVacationsQuery()
+    const idsQuery = getIdsQuery()
+    const followedVacationsIds:Array<any> = await getConnection().execute(idsQuery,[userId])
     const result = await getConnection().execute(query)
-    return result[0];
+    let vacations: Array<IVacation> = result[0]
+    followedVacationsIds[0]?.forEach((vac:any) => {
+        vacations.map((vacation:IVacation)=>{
+            if(vacation.id === vac.vac_id){
+                vacation.isFollowed = true
+            }
+        })
+    })
+    return vacations;
 }
 
 export async function createVacation(vacation: IVacation) {

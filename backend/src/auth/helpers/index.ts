@@ -1,6 +1,7 @@
 import { getConnection } from "../../db";
 import { IUserFullData, IUserLogin } from "../businessLogic";
 import { getUsersQuery } from "../query";
+const md5 = require("md5");
 
 
 
@@ -15,7 +16,7 @@ async function _getUsers() {
 
 
 export function isPassMatch(password: string, dbPassword: string) {
-    return password === dbPassword;
+    return md5(password) === dbPassword;
 }
 
 

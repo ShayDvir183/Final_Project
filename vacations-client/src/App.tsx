@@ -1,92 +1,45 @@
-import React, { useEffect } from 'react';
-import logo from './logo.svg';
-import css from "./app.module.css";
+import React,{useEffect} from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  BrowserRouter,
-  Link,
 } from "react-router-dom";
-import LoginPage from './components/pages/login';
-import RegisterPage from './components/pages/register';
-import Vacations from './components/pages/vacations';
-import MyModal from './components/ui-components/modal';
-import HomePage from './components/pages/homepage';
-import { getTokenLS, clearToken_RoleLS } from './store/ls';
-import { useAppDispatch } from './store/hooks';
-import { logOut } from './store/reducers/authReducer';
-import { logOutAction } from './store/asyncFunction/login';
-interface IRoute {
-  path: string;
-  element: any;
-  linkText: string;
-  invisible?: boolean;
-}
-let vacationsVisibility = false;
-const routes: Array<IRoute> = [
-  {
-    path: "/",
-    element: <HomePage />,
-    linkText: "HomePage",
-    invisible: false,
-  }, {
-    path: "/login",
-    element: <LoginPage />,
-    linkText: "Login",
-    invisible: false,
-  }, {
-    path: "/register",
-    element: <RegisterPage />,
-    linkText: "Register",
-    invisible: false,
-  }, {
-    path: "/vacations",
-    element: <Vacations />,
-    linkText: "Vacations",
-    invisible: false,
-  },
-]
+import NavBar, { IRoute, routes } from './components/ui-components/appBar';
+import { getVacationsAction } from './store/asyncFunction/vacations';
+import StickyFooter from './components/ui-components/footer';
+import ScrollButton from './components/ui-components/toTop';
+import ScrollTop from './components/ui-components/toTop';
+import { Fab } from '@mui/material';
+import BackToTop from './components/ui-components/toTop';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
 
 function App() {
-  const token = getTokenLS();
   useEffect(() => {
-    !token ? routes[3].invisible = true : routes[3].invisible = false;
-  }, [routes[3].invisible])
-  // make it better
-  useEffect(() => {
-    !token ? routes[3].invisible = true : routes[3].invisible = false;
-  }, [token])
-  function logoutHandler() {
-    console.log(`inside logout`)
-    if (!token) return
-    logOutAction(token)
-    return alert(`You are logged out`)
-  }
+   getVacationsAction()
+  }, [])
+  
 
   return (
-    <BrowserRouter>
+    <Router>
       <div className="App">
-        {routes.filter((route: IRoute) => !route.invisible)
-          .map((route: IRoute) => (
-            <span className={css.route}>
-              <Link to={route.path}>{route.linkText}</Link>
-            </span>
-          ))}
-        {/* @ts-ignore */}
-        <button onClick={logoutHandler}>logout</button>
-      </div>
-
+      <NavBar/>
       <Routes>
         {routes.map((route: IRoute) => (
-          <Route path={route.path} element={route.element} />
+          <Route path={route.path} element={route.element} key={route.linkText}/>
         ))}
       </Routes>
-      <MyModal />
-
-    </BrowserRouter>
-
+      <div style={{display:"flex",flexDirection:"row"}}>
+      <BackToTop>
+      <Fab size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </BackToTop>
+      <StickyFooter/>
+      </div>
+    </div>
+    </Router>
   );
 }
 

@@ -7,6 +7,7 @@ const registerUrl = "register"
 
 export async function register(user: IUserLogin) {
     const result = await axiosInstance.post(`${authBaseUrl}/${registerUrl}`, user)
+    console.log(result)
     return result.data
 
 }

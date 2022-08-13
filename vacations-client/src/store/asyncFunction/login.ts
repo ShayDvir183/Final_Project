@@ -20,6 +20,7 @@ export async function loginAction(user: IUserLogin): Promise<any> {
         store.dispatch(setUser(loginRes.token));
         setTokenLS(loginRes.token)
         setRoleLS(loginRes.role)
+        return loginRes
     } catch (error) {
 
     } finally {

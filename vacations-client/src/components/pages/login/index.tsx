@@ -16,15 +16,13 @@ import { Avatar } from '@mui/material';
 import { IUserLogin, loginAction } from '../../../store/asyncFunction/login';
 import { getTokenLS } from '../../../store/ls';
 import { useNavigate } from 'react-router-dom';
-import MyModal from '../../ui-components/modal';
+import { swalFire } from '../../helpers';
 
 
 const theme = createTheme();
 
 export default function LoginPage() {
-    const [user_name, setUser_Name] = useState("");
-    const [password, setPassword] = useState("");
-    const [user, setUser] = useState({ user_name: user_name, password: password });
+    const [user, setUser] = useState({ user_name: "", password: "" });
     let navigate = useNavigate();
     useEffect(() => {
         const isTokenExists = getTokenLS();
@@ -32,26 +30,26 @@ export default function LoginPage() {
             navigate("/");
         }
     }, [])
-    useEffect(() => {
+ 
+    async function loginHandler() {
         if (!user.user_name || !user.password) return
-        loginAction(user)
-        setTimeout(() => { navigate("/") }, 2000);
-
-    }, [user])
-    function loginHandler() {
-        setUser({ user_name: user_name, password: password });
-    }
-
-
-
-
+       const result = await loginAction(user)
+       console.log(result)
+       if(result.message === "Login Success"){
+        swalFire("Success",result.message,"success").then((result:any) => {
+            console.log(result)
+            if(result.isDismissed){
+              navigate("/");
+            }
+          }) 
+    }}
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xl" sx={{height:"100%",mt:5}}>
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        marginTop: 0,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -65,7 +63,7 @@ export default function LoginPage() {
                     </Typography>
                     <Box component="form" noValidate sx={{ mt: 1 }}>
                         <TextField
-                            onChange={(e) => setUser_Name(e.target.value)}
+                            onChange={(e) => setUser({...user, user_name: e.target.value})}
 
                             margin="normal"
                             required
@@ -77,7 +75,7 @@ export default function LoginPage() {
                             autoFocus
                         />
                         <TextField
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => setUser({...user, password: e.target.value})}
                             margin="normal"
                             required
                             fullWidth
@@ -98,7 +96,7 @@ export default function LoginPage() {
                         </Button>
                         <Grid container>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/register" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>

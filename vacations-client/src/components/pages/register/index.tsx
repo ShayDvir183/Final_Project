@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { registerAction } from '../../../store/asyncFunction/register';
 import { getTokenLS } from '../../../store/ls';
+import { swalFire } from '../../helpers';
 
 
 export interface IUserRegister {
@@ -26,24 +27,10 @@ export interface IUserRegister {
 }
 
 const theme = createTheme();
-
 export default function SignUp() {
     let navigate = useNavigate();
-    const [first_name, setFirst_Name] = useState("");
-    const [last_name, setLast_Name] = useState("");
-    const [user_name, setUser_Name] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [user, setUser] = useState({ user_name: user_name, password: password, email: email, first_name: first_name, last_name: last_name });
-
-    useEffect(() => {
-        if (!user_name || !password || !email || !first_name || !last_name) return
-
-        registerAction(user)
-        setTimeout(() => {
-            navigate("/")
-        }, 1000);
-    }, [user])
+   
+    const [user, setUser] = useState({ user_name: "", password: "", email: "", first_name: "", last_name: "" });
 
     useEffect(() => {
         const isTokenExists = getTokenLS();
@@ -51,6 +38,17 @@ export default function SignUp() {
             navigate("/");
         }
     }, [])
+    async function registerHandler(){
+        if (!user.user_name || !user.password || !user.email || !user.first_name || !user.last_name) return
+        const result = await registerAction(user)
+        console.log(result)
+        if(result.message === "Register Success"){
+            swalFire("Success",result.message,"success").then((result:any) => {
+                console.log(result)
+                if(result.isDismissed){
+                  navigate("/login")
+    }
+})}}
 
     return (
         <ThemeProvider theme={theme}>
@@ -81,7 +79,7 @@ export default function SignUp() {
                                     id="firstName"
                                     label="First Name"
                                     autoFocus
-                                    onChange={(e) => setFirst_Name(e.target.value)}
+                                    onChange={(e) => setUser({...user, first_name: e.target.value})}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -92,7 +90,7 @@ export default function SignUp() {
                                     label="Last Name"
                                     name="lastName"
                                     autoComplete="family-name"
-                                    onChange={(e) => setLast_Name(e.target.value)}
+                                    onChange={(e) => setUser({...user, last_name: e.target.value})}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -103,7 +101,7 @@ export default function SignUp() {
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={(e) => setUser({...user, email: e.target.value})}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -114,7 +112,7 @@ export default function SignUp() {
                                     label="User Name"
                                     name="username"
                                     autoComplete="username"
-                                    onChange={(e) => setUser_Name(e.target.value)}
+                                    onChange={(e) => setUser({...user, user_name: e.target.value})}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -126,7 +124,7 @@ export default function SignUp() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => setUser({...user,password : e.target.value})}
                                 />
                             </Grid>
                         </Grid>
@@ -135,9 +133,7 @@ export default function SignUp() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={() => {
-                                setUser({ user_name, password, email, first_name, last_name });
-                            }}
+                            onClick={registerHandler}
                         >
                             Sign Up
                         </Button>
