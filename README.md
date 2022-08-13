@@ -55,12 +55,18 @@ Type :
 
 ### We Left Our Command Line On Client Folder - Lets Get Inside dev-apps
 
-    cd .. 
+    cd ..
     cd ./dev-apps
     docker-compose up
 
 ## So We Got The DataBase Ready & All The Npm Packages Installed Lets Keep Going
 
+    cd ..
+    cd ./backend
+    npm run start-all
 
+## In A Few Seconds The Website Will Open
 
+# Enjoy
 
+## For Best User Experience - Admin UserName Is : shayd Password Is : 1
