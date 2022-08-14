@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -11,9 +9,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { HandshakeRounded, LocationSearchingOutlined } from '@mui/icons-material';
 import { Avatar } from '@mui/material';
-import { IUserLogin, loginAction } from '../../../store/asyncFunction/login';
+import { loginAction } from '../../../store/asyncFunction/login';
 import { getTokenLS } from '../../../store/ls';
 import { useNavigate } from 'react-router-dom';
 import { swalFire } from '../../helpers';
@@ -39,7 +36,7 @@ export default function LoginPage() {
         swalFire("Success",result.message,"success").then((result:any) => {
             console.log(result)
             if(result.isDismissed){
-              navigate("/");
+              navigate("/vacations");
             }
           }) 
     }}
@@ -73,7 +70,7 @@ export default function LoginPage() {
                             name="username"
                             autoComplete="username"
                             autoFocus
-                        />
+                        />  
                         <TextField
                             onChange={(e) => setUser({...user, password: e.target.value})}
                             margin="normal"

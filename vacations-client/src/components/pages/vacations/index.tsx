@@ -26,7 +26,11 @@ export default function Vacations() {
         getVacationsAction()
     }
     dispatch(setPaginationVacations(page))
-},[,page])
+},[page])
+useEffect(() => {
+    const p = localStorage.getItem("page");
+    if(p){setPage(parseInt(p)) }else{setPage(1)}
+}, [])
     useEffect(() => {
         if (!tokenLS) {
             navigate("/login");
@@ -90,7 +94,7 @@ export default function Vacations() {
                 hideNextButton
                 hidePrevButton
                 shape="circular"
-                page={Number(page)}
+                page={Number(page)||1}
                  count={pagesCount} onChange={(e:any)=>{
                     window.scrollTo({top:0,behavior:"smooth"})
                     setPage(e.target.innerText)

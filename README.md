@@ -22,11 +22,6 @@ Clone This Git Folder
 
 # Ok Lets Keep Going
 
-Now After You Created A New Folder And Cloned Pooking App
-Type :
-
-     mkdir Project-3
-
 ## Now we Need To Install All The Npm Packages
 
 ### We Will Start With Server Side
