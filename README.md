@@ -71,9 +71,8 @@ The backend of this project is developed using Node.js along with the Express fr
     cd ./dev-apps
     docker-compose up
 
-<span> So We Got The DataBase Ready & All The Npm Packages Installed Lets Keep Going</span>
+<span> So We Got The DataBase Ready & All The Npm Packages Installed Lets Open New Terminal</span>
 
-    cd ..
     cd ./backend
     npm run start
 
