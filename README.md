@@ -1,36 +1,53 @@
-# Welcome To Pooking
+<h1 style="color: #8abaea;"> Welcome To Pooking</h1>
 
-## Introduction
+<h2 > Introduction</h2>
+<p>Welcome To Pooking, Pooking is a comprehensive project designed to assist individuals in obtaining information about vacations and efficiently managing their travel plans. This system aims to simplify the process of gathering essential details about various vacation destinations, tracking important dates, managing expenses, and understands what are the vacations that other people desire.</p>
+<h2 style="color: #8abaea;">Table of Contents</h2>
+<ul>
+<li>Technologies Used</li>
+<li>Installation</li>
+</ul>
 
-Welcome To Pooking, My WebApp For Managing Your Vacations
+<h2 style="color: #8abaea;">Technologies Used</h2>
+<h5>This project utilizes the following technologies:</h5>
+<ul>
+<li>Frontend Development:</li>
+<p>The frontend development of this project is built using React, a popular JavaScript library for building user interfaces. React provides a powerful and efficient way to create interactive and dynamic UI components, ensuring a smooth and seamless user experience.</p>
+<li>Backend Development:</li>
+<p>
+The backend of this project is developed using Node.js along with the Express framework. Node.js enables server-side JavaScript execution, allowing for efficient and scalable backend development. Express, a minimal and flexible web application framework for Node.js, simplifies the development of robust APIs and server-side logic.
+</p>
+<li>HTML and CSS:</li>
+<p> The project incorporates HTML (Hypertext Markup Language) and CSS (Cascading Style Sheets) for structuring and styling the web pages. HTML is used to define the structure and content of the application, while CSS is employed to enhance the visual presentation, layout, and styling of the HTML elements.</p>
+<li>Database:</li>
+<p>This project utilizes the MySQL relational database management system. MySQL is a widely-used open-source database that provides scalability, performance, and reliability for storing and retrieving data. It allows for efficient management of structured data and enables seamless integration with the backend of the application.</p>
+</ul>
 
-## Installation
+ <h2 style="color: #8abaea;">Installation</h2>
 
-Clone This Git Folder
+<span> Clone This Git Folder </span>
 
-![cloneScreenShot](https://user-images.githubusercontent.com/96018011/184193603-ff75af7b-0ffd-4f97-b4db-8375c04303b7.png)
+<img src="./readmeimages/cloneImage.png"/>
 
-### Create New Folder
+<h3> Create New Folder </h3>
 
-### Open Command Line Inside Your New Folder :
+<h5>Open Command Line Inside Your New Folder :</h5>
 
      git init
 
-     git clone https://github.com/ShayDvir183/Project-3.git
+     git clone https://github.com/ShayDvir183/Final_Project.git
 
-## Now You Have Pooking On Your Device
+<h4>Now You Have Pooking On Your Device</h4>
 
-# Ok Lets Keep Going
+<h3>Now we Need To Install All The Npm Packages</h3>
 
-## Now we Need To Install All The Npm Packages
-
-### We Will Start With Server Side
+<h4 style="color:#8abaea"> Lets Start With Server Side</h4>
 
     cd ./backend
 
     npm i
 
-### Lets Move To Client Side
+<h4 style="color:#8abaea;">Lets Move To Client Side</h4>
 
      cd ..
 
@@ -38,30 +55,33 @@ Clone This Git Folder
 
     npm i
 
-## Ok Server Side & Client Side Are Ready , Lets Set The DB
+<h3> Server Side & Client Side Are Ready , Lets Set The DATABASE</h3>
 
-# Docker
+<h2 style="color: #8abaea;"> Docker</h2>
 
-## We Want Your Experience To Be The Best So We Need You To Install Docker Desktop
+<p> We Want Your Experience To Be The Best So We Need You To Install Docker Desktop</p>
 
-### Docker Site - https://www.docker.com/products/docker-desktop/
+<h2 style="color: #8abaea;">Docker Site</h2>  <a>https://www.docker.com/products/docker-desktop/</a>
 
-## So You Have Docker Desktop Installed Lets Get To Business
+<h4>So You Have Docker Desktop Installed Lets Get To Business</h4>
 
-### We Left Our Command Line On Client Folder - Lets Get Inside dev-apps
+ <p>We Left Our Command Line On Client Folder - Lets Get Inside dev-apps folder</p>
 
     cd ..
     cd ./dev-apps
     docker-compose up
 
-## So We Got The DataBase Ready & All The Npm Packages Installed Lets Keep Going
+<span> So We Got The DataBase Ready & All The Npm Packages Installed Lets Keep Going</span>
 
     cd ..
     cd ./backend
-    npm run startAll
+    npm run start
 
-## In A Few Seconds The Website Will Open
+<p> In A Few Seconds The Website Will Open
 
-# Enjoy
+Enjoy</p>
 
-## For Best User Experience - Admin UserName Is : shayd Password Is : 1
+<h3 style="color: red;">For Best User Experience -<br/> Admin User-Name Is : shayd<br/> 
+Password Is : 1 </h3>
+
+<!-- ADD INSTRUCTIONS FOR STARTING THE PROJECT GOOD JOB MAN YOUR GOING TO BE A FATHER !!!!!!!!! -->

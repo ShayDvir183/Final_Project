@@ -1,15 +1,13 @@
-import { Box } from "@mui/material"
-import React from "react"
-import MyImageList from "../../ui-components/imageList"
-
-
-
-
+import { Box } from "@mui/material";
+import MyImageList from "../../ui-components/imageList";
+import styles from "./homePage.module.css";
 
 export default function HomePage() {
-    const pText = "Welcome To Pooking, the best vacation site in the world!"
-    return <Box component={"div"} sx={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
-        <h1>Welcome To Pooking</h1>
-        <MyImageList/>
+  const pText = "Welcome To Pooking, We Will Help You Organize Your Vacations";
+  return (
+    <Box component={"div"} className={styles.box}>
+      <h1 className={styles.text}>{pText}</h1>
+      <MyImageList />
     </Box>
+  );
 }

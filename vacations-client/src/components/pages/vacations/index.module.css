@@ -1,0 +1,37 @@
+.box {
+  margin: auto auto;
+  margin-top: 80px;
+  text-align: center;
+  white-space: pre !important;
+}
+.text {
+  font-size: xx-large;
+  display: block;
+  color: #fff;
+}
+.label {
+  font-size: large;
+  color: #fff;
+}
+.icon {
+  padding: 5px;
+  height: 70px !important;
+  width: 70px !important;
+}
+
+.grid {
+  margin: auto auto !important;
+  width: 100% !important;
+}
+.wrap {
+  display: flex !important;
+  justify-content: center !important;
+  text-align: center !important;
+  align-items: center !important;
+  flex-direction: row !important;
+}
+.pagination {
+  display: block !important;
+  margin-top: 10px !important;
+  margin: auto auto !important;
+}

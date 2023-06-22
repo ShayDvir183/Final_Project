@@ -1,0 +1,19 @@
+.chartWrap {
+  margin-top: 80px !important;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 100%;
+  margin: auto auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.chartWrap h1 {
+  color: #fff;
+}
+.chart {
+  margin-top: 30px;
+  height: 400px;
+  width: 100%;
+}

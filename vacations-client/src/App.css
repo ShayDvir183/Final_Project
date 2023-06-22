@@ -4,13 +4,12 @@
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: #fceed1 !important;
+  background-color: #207ce5;
 }
-body{
+body {
   overflow: hidden;
   height: 100vh;
   width: 100vw;
-
 }
 .App-logo {
   height: 40vmin;

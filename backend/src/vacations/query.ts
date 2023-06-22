@@ -2,50 +2,50 @@
 
 
 
-const getAllVacationsQuery = () => {
+const getAllVacationsQuery = ():string => {
     return 'SELECT * FROM vacations_app.vacations order by from_date '
 }
-const getCreateVacationQuery = () => {
+const getCreateVacationQuery = ():string => {
     return 'INSERT INTO vacations_app.vacations (description, destination, image, from_date, to_date, price) VALUES (?, ?, ?, ?, ?, ?);'
 }
-const getUpdateVacationQuery = () => {
+const getUpdateVacationQuery = ():string => {
     return 'UPDATE `vacations_app`.`vacations` SET `description` = ?, `destination` = ?, `image` = ?, `from_date` = ?, `to_date` = ?, `price` = ? WHERE (`id` = ?);'
 }
-const getFollowVacationQuery = () => {
+const getFollowVacationQuery = ():string => {
     return 'INSERT INTO vacations_app.followed_vacations (vac_id, user_id, follow_status) VALUES (?, ?, ?);'
 }
-const getIsFollowingQuery = () => {
+const getIsFollowingQuery = ():string => {
     return 'SELECT * FROM vacations_app.followed_vacations where vac_id = ? order by created_at desc limit 1'
 }
-const getCheckFollowQuery = () => {
+const getCheckFollowQuery = ():string => {
     return 'SELECT * FROM vacations_app.followed_vacations where user_id = ? and vac_id = ?'
 }
-const getUpdateFollowQuery = () => {
+const getUpdateFollowQuery = ():string => {
     return 'UPDATE vacations_app.followed_vacations SET follow_status = ? WHERE (id = ?);'
 }
-const getUpdateFollowersAmountQuery = () => {
+const getUpdateFollowersAmountQuery = ():string => {
     return 'UPDATE `vacations_app`.`vacations` SET `ammount_of_followers` = ? WHERE (`id` = ?);'
 
 }
-const getAmountOfFollowersQueryFollowedVacations = () => {
+const getAmountOfFollowersQueryFollowedVacations = ():string => {
     return 'Select count(*) as AmountOfFollowers, vac_id from followed_vacations where follow_status = "follow"  group by vac_id'
 
 }
-const getUpdateAmountOfFollowersQuery = () => {
+const getUpdateAmountOfFollowersQuery = ():string => {
     return 'UPDATE `vacations_app`.`vacations` SET `ammount_of_followers` = ? WHERE (`id` = ?);'
 }
 
-const getAmountOfFollowersQuery = () => {
+const getAmountOfFollowersQuery = ():string => {
     return 'SELECT id,ammount_of_followers FROM vacations_app.vacations;'
 }
 
-const getDeleteVacationQuery = () => {
+const getDeleteVacationQuery = ():string => {
     return 'DELETE FROM `vacations_app`.`vacations` WHERE (`id` = ?);'
 }
-const getIdsQuery = () => {
+const getIdsQuery = ():string => {
     return 'SELECT vac_id FROM vacations_app.followed_vacations where user_id = ? and follow_status = "follow";'
 }
-const getChartDataQuery = () => {
+const getChartDataQuery = ():string => {
     return 'SELECT destination,ammount_of_followers FROM vacations_app.vacations where ammount_of_followers != 0;'
 }
 

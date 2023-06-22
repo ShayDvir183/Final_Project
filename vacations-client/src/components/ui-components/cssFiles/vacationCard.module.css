@@ -1,0 +1,23 @@
+.card {
+  box-shadow: 1;
+  border-radius: 2;
+  padding: 8px;
+  width: 300px;
+  background-color: #8abaea !important;
+  margin: auto;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.card:hover {
+  cursor: pointer;
+  background-color: #90caf9 !important;
+}
+.text {
+  color: #fff;
+  padding: 5px;
+  font-size: large !important;
+}

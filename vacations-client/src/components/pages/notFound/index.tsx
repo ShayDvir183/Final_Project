@@ -1,5 +1,4 @@
-
-import "./index.css"
-export default function NotFound(){
-    return  <div className="hit-the-floor">404</div>
+import styles from "./index.module.css";
+export default function NotFound() {
+  return <div className={styles.notFound}>404</div>;
 }

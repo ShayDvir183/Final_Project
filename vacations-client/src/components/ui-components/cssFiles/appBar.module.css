@@ -1,0 +1,74 @@
+.menuLink {
+  padding: 5px;
+  display: block;
+}
+.navLink {
+  padding: 10px;
+  color: #fff !important;
+  font-weight: 400;
+  font-size: x-large;
+  display: block;
+}
+.logOut {
+  display: inline-flex;
+  padding: 15px !important;
+  background-color: #8abaea !important ;
+  font-weight: bolder !important;
+  text-decoration: underline !important;
+  width: fit-content !important;
+  height: fit-content !important;
+  cursor: pointer !important;
+  right: 5px !important;
+  top: 5px !important;
+  position: fixed !important;
+  color: #fff !important;
+}
+.logOut span {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+}
+.appBar {
+  background-color: #8abaea !important;
+  width: 90%;
+  margin: auto auto;
+  position: static;
+  margin-bottom: 160px !important;
+}
+.toolBar {
+  padding: 0 !important;
+  width: 100% !important;
+}
+.headlineBox {
+  display: flex;
+  flex-direction: row;
+  left: 0;
+  width: 15%;
+  top: 0;
+}
+.icon {
+  margin-right: 8px;
+  color: #fff !important;
+}
+.headLine {
+  margin-right: 100px;
+  font-family: monospace;
+  font-weight: 700;
+  letter-spacing: 0.3rem;
+  color: #fff;
+  text-decoration: none;
+}
+.menuLinksBox {
+  flex-grow: 1;
+  width: 100% !important;
+}
+.linksBox {
+  flex-direction: row;
+  bottom: 0;
+  width: 100% !important;
+  flex-grow: 1;
+}

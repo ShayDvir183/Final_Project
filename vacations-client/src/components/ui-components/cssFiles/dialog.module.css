@@ -1,0 +1,35 @@
+.dialogTitle {
+  text-align: center;
+  background-color: #8abaea;
+  color: #fff;
+}
+.dialogActions {
+  text-align: center;
+  background-color: #8abaea;
+  color: #fff;
+  display: flex;
+  justify-content: center !important;
+}
+.dialogContent {
+  background-color: #207ce5;
+}
+.inputField {
+  border-color: none;
+  background-color: #207ce5 !important;
+  border-radius: 5px;
+}
+.inputTitle {
+  color: #fff !important;
+  font-size: larger !important;
+}
+.button {
+  color: #fff !important;
+  font-size: larger !important;
+  font-weight: bolder !important;
+}
+.date-pickers-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}

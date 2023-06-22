@@ -1,7 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { store } from "..";
 import { getTokenLS } from "../ls";
-const { dispatch } = store;
 const axiosInstance: any = axios.create({ baseURL: "http://localhost:3500" });
 axiosInstance.interceptors.request.use((request: any) => {
   request.headers.authorization = getToken();
@@ -16,8 +14,6 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-
 
 function getToken() {
   return getTokenLS();

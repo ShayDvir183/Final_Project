@@ -6,10 +6,10 @@
   "scripts": {
     "install-globals": "npm install nodemon -g tsc -g",
     "build-watch": "npx tsc --watch",
-    "start-dev": " nodemon --delay 25 ./dist/index.js",
+    "start-dev": " nodemon --delay 2.5  ./dist/index.js",
     "start-client": "cd .. && cd vacations-client && npm start",
-    "start-db": "cd .. && cd dev-apps && docker-compose up",
-    "start": "concurrently -k -p \"[{name}]\" -n \"TS-Compile-Api,Api\" -c \"blue,red\"  \"npm run build-watch\" \"npm run start-dev\" ",
+    "start-db": "cd .. && cd dev-apps && docker-compose up ",
+    "start": "concurrently -k -p \"[{name}]\" -n \"TS-Compile-Api,Api,Client\" -c \"blue,red,white\"  \"npm run build-watch\" \"npm run start-dev\" \"npm run start-client\" ",
     "startAll": "concurrently -k -p \"[{name}]\" -n \"Docker,TS-Compile-Api,Api,Client\" -c \"white,blue,red,green\" \"npm run start-db\" \"npm run build-watch\" \"npm run start-dev\" \"npm run start-client\" ",
     "test": "mocha ./test/ --recursive --exit"
   },
