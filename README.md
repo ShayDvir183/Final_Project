@@ -35,7 +35,7 @@ The backend of this project is developed using Node.js along with the Express fr
 
      git init
 
-     git clone https://github.com/ShayDvir183/Final_Project.git
+     git clone https://github.com/ShayDvir183/Vacations_Feed.git
 
 <h4>Now You Have Pooking On Your Device</h4>
 
@@ -82,5 +82,3 @@ Enjoy</p>
 
 <h3 style="color: red;">For Best User Experience -<br/> Admin User-Name Is : shayd<br/> 
 Password Is : 1 </h3>
-
-<!-- ADD INSTRUCTIONS FOR STARTING THE PROJECT GOOD JOB MAN YOUR GOING TO BE A FATHER !!!!!!!!! -->
